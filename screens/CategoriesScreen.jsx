@@ -5,12 +5,13 @@ import CategoryGrid from "../components/CategoryGrid";
 
 export default function CategoriesScreen() {
   const renderCategoryItem = (itemData) => {
-    return <CategoryGrid title={itemData.item.title} color={itemData.item.color}/>;
+    return (
+      <CategoryGrid title={itemData.item.title} color={itemData.item.color} />
+    );
   };
 
   return (
     <FlatList
-    style={styles.flatlist}
       data={CATEGORIES}
       keyExtractor={(item) => item.id}
       renderItem={renderCategoryItem}
@@ -19,8 +20,4 @@ export default function CategoriesScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-    flatlist:{
-        marginTop:40
-    }
-});
+const styles = StyleSheet.create({});
