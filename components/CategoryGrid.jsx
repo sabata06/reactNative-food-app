@@ -1,10 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-export default function CategoryGrid({ color, title }) {
+export default function CategoryGrid({ color, title, pressFood }) {
   return (
     <View style={styles.gridItem}>
       <Pressable
+      onPress={pressFood}
         style={({ pressed }) => [styles.button, pressed && styles.buttonPress]}
       >
         <View style={[styles.insideView, { backgroundColor: color }]}>

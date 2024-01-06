@@ -3,10 +3,18 @@ import React from "react";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGrid from "../components/CategoryGrid";
 
-export default function CategoriesScreen() {
+export default function CategoriesScreen({ navigation }) {
   const renderCategoryItem = (itemData) => {
+    function pressHandler() {
+      navigation.navigate("FoodOverview", {categoryId:itemData.item.id});
+    }
+
     return (
-      <CategoryGrid title={itemData.item.title} color={itemData.item.color} />
+      <CategoryGrid
+        pressFood={pressHandler}
+        title={itemData.item.title}
+        color={itemData.item.color}
+      />
     );
   };
 
