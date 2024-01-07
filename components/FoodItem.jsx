@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Pressable, Image } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, Pressable, Image } from "react-native";
+import React from "react";
+import { useNavigation } from '@react-navigation/native';
 
 export default function FoodItem({
   id,
@@ -8,10 +9,15 @@ export default function FoodItem({
   affordability,
   complexity,
 }) {
+  const navigation = useNavigation();
+  const FoodItemHandler = () => {
+    navigation.navigate("FoodDetail", {foodId: id});
+  };
   return (
     <View style={styles.foodItem}>
       <Pressable
         style={({ pressed }) => (pressed ? styles.buttonPressed : null)}
+        onPress={FoodItemHandler}
       >
         <View style={styles.innerView}>
           <View>
@@ -31,9 +37,9 @@ export default function FoodItem({
 const styles = StyleSheet.create({
   foodItem: {
     margin: 15,
-    backgroundColor: 'white',
+    backgroundColor: "white",
     elevation: 4,
-    shadowColor: '#171717',
+    shadowColor: "#171717",
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
@@ -41,19 +47,19 @@ const styles = StyleSheet.create({
   },
   innerView: {},
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
   },
   title: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     margin: 8,
   },
   details: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginBottom: 5,
   },
   detailItem: {
