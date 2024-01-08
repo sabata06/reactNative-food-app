@@ -6,32 +6,50 @@ import {
   Image,
   Pressable,
 } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 
 import { FOODS } from "../data/dummy-data";
 import FoodIngredients from "../components/FoodIngredients";
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { FavoritesContext } from "../store/favoritesContext";
 
 export default function FoodDetailScreen({ route, navigation }) {
+  const favoriteFoodContext = useContext(FavoritesContext);
   const foodId = route.params.foodId;
   const selectedFood = FOODS.find((food) => food.id === foodId);
-  console.log(selectedFood);
+  console.log(foodId);
+  const foodIsFavorite = favoriteFoodContext.ids?.includes(foodId);
 
-  const favoriteHandler = () =>{
-
+  const favoriteHandler = () => {};
+  
+  function changeFavorite() {
+    if (foodIsFavorite) {
+      favoriteFoodContext.removeFavorite(foodId);
+    } else {
+      favoriteFoodContext.addFavorite(foodId);
+    }
   }
+
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         return (
-          <Pressable onPress={favoriteHandler} style={({pressed}) => (pressed && styles.pressed)} >
-            <MaterialIcons name="favorite" size={24} color="white" />
+          <Pressable
+            onPress={favoriteHandler}
+            style={({ pressed }) => pressed && styles.pressed}
+          >
+            <MaterialIcons
+              name={foodIsFavorite ? "favorite" : "favorite-outline"}
+              size={24}
+              color="white"
+              onPress={changeFavorite}
+            />
           </Pressable>
         );
       },
     });
-  }, [navigation]);
+  }, [navigation,changeFavorite]);
 
   return (
     <ScrollView style={styles.rootContainer}>
@@ -93,7 +111,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  pressed:{
-    opacity:0.5
-  }
+  pressed: {
+    opacity: 0.5,
+  },
 });
