@@ -21,7 +21,7 @@ export default function FoodDetailScreen({ route, navigation }) {
   const foodIsFavorite = favoriteFoodContext.ids?.includes(foodId);
 
   const favoriteHandler = () => {};
-  
+
   function changeFavorite() {
     if (foodIsFavorite) {
       favoriteFoodContext.removeFavorite(foodId);
@@ -29,7 +29,6 @@ export default function FoodDetailScreen({ route, navigation }) {
       favoriteFoodContext.addFavorite(foodId);
     }
   }
-
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -49,7 +48,7 @@ export default function FoodDetailScreen({ route, navigation }) {
         );
       },
     });
-  }, [navigation,changeFavorite]);
+  }, [navigation, changeFavorite]);
 
   return (
     <ScrollView style={styles.rootContainer}>
