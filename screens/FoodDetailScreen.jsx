@@ -7,26 +7,31 @@ import {
   Pressable,
 } from "react-native";
 import React, { useContext, useLayoutEffect } from "react";
-
 import { FOODS } from "../data/dummy-data";
 import FoodIngredients from "../components/FoodIngredients";
 import { MaterialIcons } from "@expo/vector-icons";
-import { FavoritesContext } from "../store/favoritesContext";
+// import { FavoritesContext } from "../store/favoritesContext";
+import {useSelector,useDispatch } from "react-redux"
+import { addFavorite, removeFavorite } from "../store/redux/favoritesSlice";
 
 export default function FoodDetailScreen({ route, navigation }) {
-  const favoriteFoodContext = useContext(FavoritesContext);
+  // const favoriteFoodContext = useContext(FavoritesContext);
+  const favoriteFoodIds = useSelector((state) => state.favoriteFoods.ids)
   const foodId = route.params.foodId;
   const selectedFood = FOODS.find((food) => food.id === foodId);
   console.log(foodId);
-  const foodIsFavorite = favoriteFoodContext.ids?.includes(foodId);
+  const foodIsFavorite = favoriteFoodIds?.includes(foodId);
+  const dispatch = useDispatch()
 
   const favoriteHandler = () => {};
 
   function changeFavorite() {
     if (foodIsFavorite) {
-      favoriteFoodContext.removeFavorite(foodId);
+      // favoriteFoodContext.removeFavorite(foodId);
+      dispatch(removeFavorite({id:foodId}))
     } else {
-      favoriteFoodContext.addFavorite(foodId);
+      dispatch(addFavorite({id:foodId}))
+      // favoriteFoodContext.addFavorite(foodId);
     }
   }
 
